@@ -4,6 +4,12 @@ API调用示例
 """
 import os
 from openai import OpenAI
+from model_config import ModelConfigManager
+
+# 在代码开头设置代理环境变量
+os.environ['HTTP_PROXY'] = 'http://127.0.0.1:7897'
+os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:7897'
+os.environ['ALL_PROXY'] = 'http://127.0.0.1:7897'
 
 def initialize_client(api_key, base_url):
     if not api_key:
@@ -14,20 +20,10 @@ def initialize_client(api_key, base_url):
         base_url=base_url
     )
 
-def chat_with_llm(client, conversation_history, model):
-    try:
-        response = client.chat.completions.create(
-            model = model,
-            messages = conversation_history,
-            stream = False
-        )
-        return response.choices[0].message.content
+def chat_single(config_manager: ModelConfigManager, provider: str, model: str):
+    model_config = config_manager.get_model_config(provider, model)
+    client = initialize_client(api_key=model_config['api_key'], base_url=model_config['base_url'])
     
-    except Exception as e:
-        return f"API调用失败: {e}"
-
-def chat_single(api_key, base_url, model):
-    client = initialize_client(api_key, base_url)
     system_prompt = "You are a helpful assistant, please add '>_<' after answering each question."
     user_message = "Hello!"
     conversation = [
@@ -35,21 +31,31 @@ def chat_single(api_key, base_url, model):
         {"role": "user", "content": user_message}
     ]
 
+    print(f"使用模型: {model_config['provider']} - {model_config['model']}")
+    print(f"模型描述: {model_config['description']}")
+
     response = client.chat.completions.create(
-        model = model,
+        model = model_config['model'],
         messages = conversation,
         stream = False
     )
+    
     print(f"LLM🤖: {response.choices[0].message.content}")
+    # 对于思考模型，可以通过reasoning_content访问思维链
+    # print(f"LLM🤖: {response.choices[0].message.reasoning_content}")
 
-def chat_multi(api_key, base_url, model):
-    client = initialize_client(api_key=api_key, base_url=base_url)
+def chat_multi(config_manager: ModelConfigManager, provider: str, model: str):
+    model_config = config_manager.get_model_config(provider, model)
+    client = initialize_client(api_key=model_config['api_key'], base_url=model_config['base_url'])
     system_prompt = "You are a helpful assistant, please add '>_<' after answering each question."
     conversation = [
         {"role": "system", "content": system_prompt}
     ] 
     
+    print(f"使用模型: {model_config['provider']} - {model_config['model']}")
+    print(f"模型描述: {model_config['description']}")
     print("开始多轮对话，输入 'q' 退出\n")
+    
     while True:
         user_input = input('human👤:').strip()
         if user_input == 'q':
@@ -61,16 +67,21 @@ def chat_multi(api_key, base_url, model):
             continue
         
         conversation.append({"role": "user", "content": user_input})
-        response = chat_with_llm(client, conversation, model)
+        response = client.chat.completions.create(
+            model = model_config['model'],
+            messages = conversation,
+            stream = False
+        )
         
-        conversation.append({"role": "assistant", "content": response})
-        print(f"LLM🤖: {response}")
+        ai_response = response.choices[0].message.content
+        conversation.append({"role": "assistant", "content": ai_response})
+        print(f"LLM🤖: {ai_response}")
 
 if __name__ == "__main__":
-    api_key = os.environ.get("DEEPSEEK_API_KEY")
-    base_url = "https://api.deepseek.com"
-    model = "deepseek-chat"
-    
-    chat_single(api_key, base_url, model)       # 单轮对话测试
+    config_manager = ModelConfigManager()
+    provider = 'deepseek'
+    model = 'deepseek-chat'
+
+    chat_single(config_manager, provider, model)       # 单轮对话测试
     # chat_multi(api_key, base_url, model)      # 多轮对话测试
     

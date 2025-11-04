@@ -1,0 +1,30 @@
+providers:
+  deepseek:
+    api_key_env: "DEEPSEEK_API_KEY"
+    base_url: "https://api.deepseek.com"
+    models:
+      "deepseek-chat": "非推理模型,LLM"
+      "deepseek-reasoner": "推理模型,LLM"
+  
+  qwen:
+    api_key_env: "QWEN_API_KEY"
+    base_url: ""
+    models: 
+      "qwen-turbo": "通义千问Turbo模型"
+      "qwen-plus": "通义千问Plus模型"
+      "qwen-max": "通义千问Max模型"
+
+  openai:
+    api_key_env: "OPENAI_API_KEY"
+    base_url: ""
+    models:
+      "gpt-3.5-turbo": "OpenAI GPT-3.5 Turbo"
+      "gpt-4": "OpenAI GPT-4"
+      "gpt-4-turbo": "OpenAI GPT-4 Turbo"
+
+  gemini:
+    api_key_env: "GEMINI_API_KEY"
+    base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
+    models:
+      "gemini-2.5-pro": "推理模型, MLLM, Gemini旗舰模型"
+      "gemini-2.5-flash": "混合推理模型, MLLM, 能力弱于pro"    
