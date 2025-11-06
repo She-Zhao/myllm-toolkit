@@ -15,16 +15,22 @@ providers:
       "qwen-max": "通义千问Max模型"
 
   openai:
-    api_key_env: "OPENAI_API_KEY"
-    base_url: ""
+    api_key_env: "UNIFIED_API_KEY"
+    base_url: "https://api.agicto.cn/v1"
+    # api_key_env: "OPENAI_API_KEY"
+    # base_url: "https://api.openai.com/v1"
     models:
-      "gpt-3.5-turbo": "OpenAI GPT-3.5 Turbo"
-      "gpt-4": "OpenAI GPT-4"
-      "gpt-4-turbo": "OpenAI GPT-4 Turbo"
+      "gpt-5": "混合推理模型,MLLM,不会输出思维链具体内容"
+      "gpt-5-chat-latest": "混合推理模型,MLLM,不会输出思维链具体内容"
+      "gpt-4.1": "非推理模型,MLLM"
+      "o3": "推理模型,MLLM,不会输出思维链具体内容"
+      "o4-mini": "推理模型,MLLM,不会输出思维链具体内容"
 
-  gemini:
-    api_key_env: "GEMINI_API_KEY"
-    base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
+  google:
+    api_key_env: "UNIFIED_API_KEY"
+    base_url: "https://api.agicto.cn/v1"  
+    # api_key_env: "GEMINI_API_KEY"
+    # base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
     models:
       "gemini-2.5-pro": "推理模型, MLLM, Gemini旗舰模型"
       "gemini-2.5-flash": "混合推理模型, MLLM, 能力弱于pro"    
