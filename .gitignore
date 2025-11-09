@@ -3,6 +3,8 @@ dataset
 __pycache__/
 *.py[codz]
 *$py.class
+test_images
+others
 
 # C extensions
 *.so

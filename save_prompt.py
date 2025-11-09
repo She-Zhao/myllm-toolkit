@@ -32,7 +32,7 @@ def save_prompt(prompt_text_txt: Path, pe_json_path: Path) -> None:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
 if __name__ == "__main__":
-    prompt_text_txt = './dataset/prompt_text.txt'
-    pe_json_path = './dataset/pe.json'
+    prompt_text_txt = './example/prompt_text.txt'
+    pe_json_path = './example/pe.json'
         
     save_prompt(prompt_text_txt, pe_json_path)

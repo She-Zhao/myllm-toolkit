@@ -4,6 +4,7 @@ API调用示例
 """
 import os
 from openai import OpenAI
+from openai import AsyncOpenAI
 from model_config import ModelConfigManager
 
 # # 在代码开头设置代理环境变量
@@ -80,7 +81,7 @@ def chat_multi(config_manager: ModelConfigManager, provider: str, model: str):
 if __name__ == "__main__":
     config_manager = ModelConfigManager()
     provider = 'openai'
-    model = 'gpt-5'
+    model = 'gpt-4.1'
 
     # chat_single(config_manager, provider, model)       # 单轮对话测试
     chat_multi(config_manager, provider, model)      # 多轮对话测试

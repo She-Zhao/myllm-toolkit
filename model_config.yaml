@@ -7,12 +7,12 @@ providers:
       "deepseek-reasoner": "推理模型,LLM"
   
   qwen:
-    api_key_env: "QWEN_API_KEY"
-    base_url: ""
+    api_key_env: "UNIFIED_API_KEY"
+    base_url: "https://api.agicto.cn/v1"
     models: 
-      "qwen-turbo": "通义千问Turbo模型"
-      "qwen-plus": "通义千问Plus模型"
-      "qwen-max": "通义千问Max模型"
+      "qwen-vl-plus": "通义千问Turbo模型"
+      "qwen3-235b-a22b": "通义千问Plus模型"
+      "qwen-vl-max": "通义千问Max模型"
 
   openai:
     api_key_env: "UNIFIED_API_KEY"
